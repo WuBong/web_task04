@@ -1,42 +1,17 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" ref="navbar">
-    <div class="container-fluid">
-      <div>
-        <router-link to="/" class="navbar-brand" v-if="!isLoggedIn">MyNeflix</router-link>
-        <span v-else class="navbar-text">Hi, {{ userName }}</span> <!-- Display nickname -->
+  <nav class="navbar" ref="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left">
+        <router-link to="/" class="navbar-brand" v-if="!isLoggedIn">MyNetflix</router-link>
+        <span v-else class="navbar-text">Hi, {{ userName }}</span>
       </div>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <router-link to="/" class="nav-link">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/wishlist" class="nav-link">Wishlist</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/popular" class="nav-link">Popular</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/search" class="nav-link">Search</router-link>
-          </li>
-          <li class="nav-item" v-if="isLoggedIn">
-            <button class="nav-link btn btn-link" @click="handleLogout">Logout</button>
-          </li>
-          <li class="nav-item" v-else>
-            <router-link to="/kakaologin" class="nav-link">Login</router-link>
-          </li>
-        </ul>
+      <div class="navbar-right">
+        <router-link to="/" class="nav-link">Home</router-link>
+        <router-link to="/wishlist" class="nav-link">Wishlist</router-link>
+        <router-link to="/popular" class="nav-link">Popular</router-link>
+        <router-link to="/search" class="nav-link">Search</router-link>
+        <button v-if="isLoggedIn" class="nav-link button-link" @click="handleLogout">Logout</button>
+        <router-link v-else to="/kakaologin" class="nav-link">Login</router-link>
       </div>
     </div>
   </nav>
@@ -47,7 +22,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      userName: '', // State to store the KakaoTalk nickname
+      userName: "", // KakaoTalk nickname
     };
   },
   created() {
@@ -58,16 +33,16 @@ export default {
       const user = JSON.parse(localStorage.getItem("kakao_user"));
       if (user) {
         this.isLoggedIn = true;
-        this.userName = user.kakao_account.profile.nickname; // Extract nickname from user data
+        this.userName = user.kakao_account.profile.nickname;
+        
       }
     },
     handleLogout() {
-      localStorage.removeItem("kakao_user"); // Remove Kakao user data from localStorage
-      this.isLoggedIn = false; // Update the login state
-      this.userName = ''; // Clear the user's name
-      this.$router.push("/kakaologin"); // Redirect to signin page
+      localStorage.removeItem("kakao_user");
+      this.isLoggedIn = false;
+      this.userName = "";
+      this.$router.push("/kakaologin");
     },
-    // 네비게이션 바의 높이를 부모 컴포넌트로 전달
     calculateNavbarHeight() {
       const navbar = this.$refs.navbar;
       if (navbar) {
@@ -87,14 +62,64 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: #007bff !important; /* 푸른색으로 변경 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #ffffff;
 }
-.navbar-dark .navbar-brand,
-.navbar-dark .nav-link,
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: white;
+  margin-right: 1rem;
+}
+
 .navbar-text {
-  color: #ffffff !important; /* 텍스트 색상 흰색 */
+  font-size: 1rem;
+  margin-right: 1rem;
 }
-.navbar-dark .nav-link:hover {
-  color: #d1ecf1 !important; /* 호버 시 연한 색 */
+
+.nav-link {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+}
+
+.nav-link:hover {
+  color: #d1ecf1;
+}
+
+.button-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+.button-link:hover {
+  color: #d1ecf1;
 }
 </style>

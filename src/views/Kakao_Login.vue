@@ -26,7 +26,7 @@ export default {
               // 회원 정보를 Vuex나 LocalStorage에 저장
               localStorage.setItem('kakao_user', JSON.stringify(res));
               this.isLoggedIn = true; // 로그인 성공 시 isLoggedIn을 true로 설정
-              this.$router.push('/'); // 메인 페이지로 리디렉션
+              window.location.replace('/'); // 메인 페이지로 리디렉션
             },
             fail: (error) => {
               console.error(error);
