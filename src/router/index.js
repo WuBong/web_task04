@@ -57,6 +57,22 @@ const routes = [
     meta: { requiresAuth: true }, // 로그인 필요
   },
 
+  {
+    path: '/kakaologin',
+    name: 'Kakaologin',
+    component: function () {
+    return import(/* webpackChunkName: "about" */ '../views/Kakao_Login.vue')
+    },
+  },
+
+  {
+    path: '/Main',
+    name: '/MainView',
+    component: function () {
+    return import(/* webpackChunkName: "about" */ '../views/MainView.vue')
+    },
+  },
+
 ]
 
 const router = createRouter({
