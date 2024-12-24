@@ -66,7 +66,7 @@ const routes = [
   },
 
   {
-    path: '/Main',
+    path: '/mainview',
     name: '/MainView',
     component: function () {
     return import(/* webpackChunkName: "about" */ '../views/MainView.vue')
@@ -82,15 +82,13 @@ const router = createRouter({
 
 // 네비게이션 가드 설정
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = JSON.parse(localStorage.getItem('user'))?.isLoggedIn;
+  const isLoggedIn = !!localStorage.getItem('kakao_user'); // 로그인 여부 확인
 
-  if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
-    // 로그인이 필요하고, 로그인되어 있지 않다면 /signin으로 이동
-    next({ path: '/signin' });
-  } 
-  else {
-    // 그 외의 경우는 정상적으로 이동
-    next();
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    // 로그인이 필요한데 로그인되지 않은 경우
+    next('/kakaologin'); // 로그인 페이지로 리디렉션
+  } else {
+    next(); // 다음 라우트로 이동
   }
 });
 

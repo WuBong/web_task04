@@ -6,6 +6,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isLoggedIn: false, // Add isLoggedIn to track login status
+    };
+  },
   methods: {
     loginWithKakao() {
       // 카카오 로그인
@@ -20,6 +25,7 @@ export default {
               console.log('회원 정보:', res);
               // 회원 정보를 Vuex나 LocalStorage에 저장
               localStorage.setItem('kakao_user', JSON.stringify(res));
+              this.isLoggedIn = true; // 로그인 성공 시 isLoggedIn을 true로 설정
               this.$router.push('/'); // 메인 페이지로 리디렉션
             },
             fail: (error) => {

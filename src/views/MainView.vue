@@ -19,7 +19,7 @@
       if (user) {
         this.profile = user.kakao_account.profile;
       } else {
-        this.$router.push('/'); // 로그인 안 되어 있으면 리디렉션
+        this.$router.push('/kakaologin'); // 로그인 안 되어 있으면 리디렉션
       }
     },
   };
